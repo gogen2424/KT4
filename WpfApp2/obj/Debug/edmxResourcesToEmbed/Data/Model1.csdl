@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KT4Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Enter">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Enter1" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Worckers" Relationship="Self.FK_Worckers_Enter" FromRole="Enter" ToRole="Worckers" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Role1" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Worckers" Relationship="Self.FK_Worckers_Role" FromRole="Role" ToRole="Worckers" />
+  </EntityType>
+  <EntityType Name="Sex">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Sex1" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Worckers" Relationship="Self.FK_Worckers_Sex" FromRole="Sex" ToRole="Worckers" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Worckers">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="IdRole" />
+      <PropertyRef Name="UserName" />
+      <PropertyRef Name="UserSurname" />
+      <PropertyRef Name="UserPastname" />
+      <PropertyRef Name="Email" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="IdRole" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserSurname" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserPastname" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Login" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Pass" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Mpbile" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Pasport" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Date" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="TypeEnter" Type="Int32" />
+    <Property Name="LastEnter" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="idSex" Type="Int32" />
+    <NavigationProperty Name="Enter" Relationship="Self.FK_Worckers_Enter" FromRole="Worckers" ToRole="Enter" />
+    <NavigationProperty Name="Role" Relationship="Self.FK_Worckers_Role" FromRole="Worckers" ToRole="Role" />
+    <NavigationProperty Name="Sex" Relationship="Self.FK_Worckers_Sex" FromRole="Worckers" ToRole="Sex" />
+  </EntityType>
+  <Association Name="FK_Worckers_Enter">
+    <End Role="Enter" Type="Self.Enter" Multiplicity="0..1" />
+    <End Role="Worckers" Type="Self.Worckers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Enter">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Worckers">
+        <PropertyRef Name="TypeEnter" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Worckers_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="Worckers" Type="Self.Worckers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Worckers">
+        <PropertyRef Name="IdRole" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Worckers_Sex">
+    <End Role="Sex" Type="Self.Sex" Multiplicity="0..1" />
+    <End Role="Worckers" Type="Self.Worckers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sex">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Worckers">
+        <PropertyRef Name="idSex" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="KT4Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Enter" EntityType="Self.Enter" />
+    <EntitySet Name="Role" EntityType="Self.Role" />
+    <EntitySet Name="Sex" EntityType="Self.Sex" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Worckers" EntityType="Self.Worckers" />
+    <AssociationSet Name="FK_Worckers_Enter" Association="Self.FK_Worckers_Enter">
+      <End Role="Enter" EntitySet="Enter" />
+      <End Role="Worckers" EntitySet="Worckers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Worckers_Role" Association="Self.FK_Worckers_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="Worckers" EntitySet="Worckers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Worckers_Sex" Association="Self.FK_Worckers_Sex">
+      <End Role="Sex" EntitySet="Sex" />
+      <End Role="Worckers" EntitySet="Worckers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

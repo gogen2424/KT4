@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище KT4Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Enter">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Enter" Type="nvarchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Role" Type="nvarchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Sex">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Sex" Type="nvarchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "KT4.dbo.Worckers" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="Worckers">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="IdRole" />
+      <PropertyRef Name="UserName" />
+      <PropertyRef Name="UserSurname" />
+      <PropertyRef Name="UserPastname" />
+      <PropertyRef Name="Email" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="IdRole" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="UserSurname" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="UserPastname" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Login" Type="nvarchar" MaxLength="150" />
+    <Property Name="Pass" Type="nvarchar" MaxLength="150" />
+    <Property Name="Mpbile" Type="nvarchar" MaxLength="150" />
+    <Property Name="Pasport" Type="nvarchar" MaxLength="150" />
+    <Property Name="Date" Type="nvarchar" MaxLength="150" />
+    <Property Name="TypeEnter" Type="int" />
+    <Property Name="LastEnter" Type="nvarchar" MaxLength="150" />
+    <Property Name="idSex" Type="int" />
+  </EntityType>
+  <Association Name="FK_Worckers_Enter">
+    <End Role="Enter" Type="Self.Enter" Multiplicity="0..1" />
+    <End Role="Worckers" Type="Self.Worckers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Enter">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Worckers">
+        <PropertyRef Name="TypeEnter" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Worckers_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="Worckers" Type="Self.Worckers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Worckers">
+        <PropertyRef Name="IdRole" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Worckers_Sex">
+    <End Role="Sex" Type="Self.Sex" Multiplicity="0..1" />
+    <End Role="Worckers" Type="Self.Worckers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sex">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Worckers">
+        <PropertyRef Name="idSex" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище KT4ModelContainer">
+    <EntitySet Name="Enter" EntityType="Self.Enter" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sex" EntityType="Self.Sex" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Worckers" EntityType="Self.Worckers" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Worckers].[Id] AS [Id], 
+    [Worckers].[IdRole] AS [IdRole], 
+    [Worckers].[UserName] AS [UserName], 
+    [Worckers].[UserSurname] AS [UserSurname], 
+    [Worckers].[UserPastname] AS [UserPastname], 
+    [Worckers].[Email] AS [Email], 
+    [Worckers].[Login] AS [Login], 
+    [Worckers].[Pass] AS [Pass], 
+    [Worckers].[Mpbile] AS [Mpbile], 
+    [Worckers].[Pasport] AS [Pasport], 
+    [Worckers].[Date] AS [Date], 
+    [Worckers].[TypeEnter] AS [TypeEnter], 
+    [Worckers].[LastEnter] AS [LastEnter], 
+    [Worckers].[idSex] AS [idSex]
+    FROM [dbo].[Worckers] AS [Worckers]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Worckers_Enter" Association="Self.FK_Worckers_Enter">
+      <End Role="Enter" EntitySet="Enter" />
+      <End Role="Worckers" EntitySet="Worckers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Worckers_Role" Association="Self.FK_Worckers_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="Worckers" EntitySet="Worckers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Worckers_Sex" Association="Self.FK_Worckers_Sex">
+      <End Role="Sex" EntitySet="Sex" />
+      <End Role="Worckers" EntitySet="Worckers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
